@@ -157,6 +157,27 @@ function createHotGraph() {
 	// 初始化
 	var hotGraph = document.getElementById('hotGraph');
 	var context = hotGraph.getContext('2d');
-	
+	context.globalAlpha = 0.2; // 描述在canvas上绘图之前，设置图形和图片透明度的属性
+	context.globalCompositeOperation = 'lighter'; // 设置或返回如何将一个源（新的）图像绘制到目标（已有）的图像上
 
+	var reset = document.getElementById('reset');
+
+	hotGraph.onclick = function(e) {
+		x = e.clientX - e.target.offsetLeft;
+		y = e.clientY - e.target.offsetTop;
+		console.log(x, y);
+		addToPoint(context, x, y);
+	}
+
+	reset.onclick = function() {
+		context.clearRect(0, 0, 300, 300);
+	}
 }
+
+colorRange = ['#072933', '#2E4045', '#8C593B', '#B28141', '#FAC268', '#FAD237'];
+function addToPoint(context, x, y) {
+	context.arc(x, y, 2, 0, 2*Math.PI);
+	context.stroke();
+}
+
+window.addEventListener('load', createHotGraph, false);
